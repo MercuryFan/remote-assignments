@@ -1,0 +1,44 @@
+.header {
+    background-color: gray;
+    display: flex;
+}
+
+ul, li {
+    display:inline;
+    
+}
+
+.nav-bar {
+    margin-right: 0;
+    margin-left: auto;
+}
+
+.welcome {
+    border: 1px solid rgb(255, 255, 255);
+    background-color: rgb(88, 222, 222);
+}
+
+.center {
+    text-align: center;
+}
+
+.box {
+    margin: 0 auto;
+    max-width: 1200px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.box-item {
+    border: 1px solid rgb(255, 255, 255);
+    background-color: rgb(76, 73, 73);
+    display: flex;
+    flex: 1 0 400px;
+    text-align: center;
+    justify-content: center;
+    height: 150px;
+    width: 897px;
+    margin: 10px;
+}
+
+
