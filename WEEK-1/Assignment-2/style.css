@@ -1,10 +1,16 @@
+body {
+    margin: 0px;
+}
+
 .header {
-    background-color: gray;
+    background-color: #EEEEEE;
     display: flex;
+    padding: 20px;
 }
 
 ul, li {
     display:inline;
+    padding: 5px 10px;
     
 }
 
@@ -13,9 +19,15 @@ ul, li {
     margin-left: auto;
 }
 
+h1 {
+    margin: auto;
+}
+
 .welcome {
-    border: 1px solid rgb(255, 255, 255);
-    background-color: rgb(88, 222, 222);
+    background-color: #CCDDEE;
+    display: flex;
+    position:relative;
+    height: 200px;
 }
 
 .center {
@@ -30,8 +42,8 @@ ul, li {
 }
 
 .box-item {
-    border: 1px solid rgb(255, 255, 255);
-    background-color: rgb(76, 73, 73);
+    border: 10px solid rgb(255, 255, 255);
+    background-color: #8899AA;
     display: flex;
     flex: 1 0 400px;
     text-align: center;
@@ -41,4 +53,8 @@ ul, li {
     margin: 10px;
 }
 
+.button {
+    background-color: #DDEEFF;
+    
+}
 
