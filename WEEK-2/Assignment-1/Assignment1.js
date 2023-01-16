@@ -1,6 +1,5 @@
 function max(numbers){
   // your code here, for-loop method preferred
-  numbers.sort();
   let large = 0;  
   //[1.2]
   for ( let i = 0; i < numbers.length; i++ ) {
