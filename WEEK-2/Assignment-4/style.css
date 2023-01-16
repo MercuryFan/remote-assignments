@@ -21,6 +21,7 @@ ul, li {
 
 h1 {
     margin: auto;
+    cursor: pointer;
 }
 
 .welcome {
@@ -48,6 +49,12 @@ h1 {
     flex-wrap: wrap;
 }
 
+#button {
+    background-color: #DDEEFF;
+    display: inline-block;
+    
+}
+
 .box-item {
     border: 10px solid rgb(255, 255, 255);
     background-color: #8899AA;
@@ -58,11 +65,5 @@ h1 {
     height: 150px;
     width: 897px;
     margin: 10px;
-}
-
-#button {
-    background-color: #DDEEFF;
-    display: inline-block;
-    
 }
 

@@ -22,9 +22,9 @@ function findPosition(numbers, target) {
 }
 console.log(max([1, 2, 4, 5])); // should print 5
 console.log(max([5, 2, 7, 1, 6])); // should print 7
-// console.log(findPosition([5, 2, 7, 1, 6], 5)); // should print 0
-// // 表示要尋找在array[5, 2, 7, 1, 6]中,5的位置。
 
+console.log(findPosition([5, 2, 7, 1, 6], 5)); // should print 0
+// // 表示要尋找在array[5, 2, 7, 1, 6]中,5的位置。
  console.log(max([1, 2, 4, 5])); // should print 5
  console.log(max([5, 2, 7, 1, 6])); // should print 7
 
