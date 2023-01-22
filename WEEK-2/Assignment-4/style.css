@@ -35,7 +35,7 @@ h1 {
     text-align: center;
 }
 
-.box1 {
+#box1 {
     margin: 0 auto;
     max-width: 1200px;
     display: flex;

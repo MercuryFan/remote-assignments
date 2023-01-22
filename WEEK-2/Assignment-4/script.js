@@ -3,17 +3,11 @@ window.onload=function(){
     titleCh.onclick = function() {
         this.innerHTML = "Have a Good Time!";
     };
-
-
-
-
-        
-
-
     
-    const hid = document.getElementById("box2");
-    const btn = document.getElementById("button");
+    let hid = document.getElementById("box2");
+    let btn = document.getElementById("button");
     btn.onclick = function() {
+        console.log(hid.style.display);
         if ( hid.style.display === "flex") {
             hid.style.display = "none";
         } else {
@@ -21,3 +15,6 @@ window.onload=function(){
         }
     };
 }
+
+
+
