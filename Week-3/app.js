@@ -1,15 +1,23 @@
 const express = require('express');
+const bodyParser = require('body-parser')
+
 const app = express();
 
-app.use(express.static('sum'));
 
-app.get('/', (req, res) => {   
-    res.send('<h1>Hello My Server!</h1>');
+
+app.use(bodyParser.urlencoded({extended: false}));
+
+app.set('view engine', 'pug');
+app.use(express.static('sum'));
+app.get('/', (req, res) => { 
+    res.render('index');
+    
 });
 
 
 app.get('/data', (req, res) => {
      const number = req.query.number;
+     console.log(number);
     if (isNaN(req.query.number)) {  //isNaN() 函式會判斷某個數值是不是 NaN
         res.send('Wrong Parameter')
     } else if (number) {
@@ -19,8 +27,15 @@ app.get('/data', (req, res) => {
         res.send('Lack of Parameter')
 });
 
-app.get('/myname', (req, res) => {   
-    res.send('<h1>Hello My Server!</h1>');
+app.get('/myName', (req, res) => {
+    res.render('myName') 
+    
+});
+// app.get('/trackName', (req, res) => {
+//     res.render('trackName')  
+// });
+app.post('/myName', (req, res) => {
+    res.render('myName', { name: req.body.username });
 });
 
 

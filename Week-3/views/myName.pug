@@ -1,0 +1,11 @@
+extends layout.pug 
+
+block content 
+        h1 Welcome Sever
+        if name 
+            h2 Hello, #{name}!
+        else 
+            form(action="/myName" mothod="post") 
+             label Please enter your name:  
+                input(type="text" name="username")
+            button(type="submit") Submit

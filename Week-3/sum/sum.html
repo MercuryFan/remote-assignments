@@ -5,19 +5,21 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sum</title>
-    <script src="script.js"></script>
+    
 </head>
 <body>
-    <h3> 請在空格內輸入一個數字,並提交,網頁自動幫您計算加總！</h3>
-    <p>Please input number</p>
+    <h3> 請在空格內輸入一個數字並按下提交,網頁自動幫您計算加總！</h3>
+    <p>請在下面空格中輸入一個數字</p>
+
     <form action='/sum.html'>
         <input type="number" id="load">
-        <button onclick='getData()'>Submit</button>
     </form>
-
-    
-    <div id='result'>
+    <button id='btn' onclick="getData()">提交</button>
+    <div>計算結果如下：
+        <div id='result'></div>
     </div>
+    
+    <script src="script.js"></script>
 
 </body>
 </html>
