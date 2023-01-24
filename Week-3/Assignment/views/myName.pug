@@ -4,7 +4,7 @@ block content
     if name
         h2  Hello #{name}
     else 
-        form(action='/trackName', method='get')
+        form(action='/trackName', method='post')
             label Please enter you name: 
                 input(type='text', name='username')
             button(type='submit') Submit 

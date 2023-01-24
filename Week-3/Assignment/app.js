@@ -4,10 +4,12 @@ const cookieParser = require('cookie-parser');
 
 const app = express();
 
+
+app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false}));
 app.use(cookieParser());
-
 app.use(express.static('sum'));
+
 
 app.set('view engine', 'pug'); //在set()函式中 pub指告訴Express要用哪種模板引擎 view指的是 Expree默認會在名為views的文件夾下查找
 
@@ -16,26 +18,33 @@ app.get('/', (req, res) => {
     
 });
 
-
 app.get('/data', (req, res) => {
-     const number = req.query.number;
-    if ((req.query.number) == null ) {  //isNaN() 函式會判斷某個數值是不是 NaN
-        res.send('Lack of Parameter')
-    } else if (number) {
-        const result = ((1 + Number(req.query.number)) * Number(req.query.number))/2;
-        res.send(`${result}`)
-    } else if (isNaN(req.query.number)) {
+    const number = req.query.number;
+   if ( number == undefined ) { 
+       res.send('Lack of Parameter')
+   } else if (isNaN(number)) {
         res.send('Wrong Parameter')
-    }
+   } else {
+        const result = ((1 + Number(req.query.number)) * Number(req.query.number))/2;
+       res.send(`${result}`)
+   } 
 });
+
+
 app.get('/myName', (req, res) => {
     res.render('myName', { name: req.cookies.username });
 });
 
 
-app.get('/trackName', (req, res) => {
-    res.cookie('username', req.query.username);
-    res.render('trackName', { name: req.cookies.username });
+ app.post('/trackName', (req, res) => {
+      res.cookie('username', req.body.username);
+      res.redirect('/myName');//導回myName頁面
+
+});
+
+app.post('goodbye', (req, res) => {
+    res.clearCookie('username');
+    res.redirect('/myName');
 });
 
 
