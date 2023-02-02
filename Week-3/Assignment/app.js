@@ -22,12 +22,15 @@ app.get('/data', (req, res) => {
     const number = req.query.number;
    if ( number == undefined ) { 
        res.send('Lack of Parameter')
-   } else if (isNaN(number)) {
-        res.send('Wrong Parameter')
-   } else {
-        const result = ((1 + Number(req.query.number)) * Number(req.query.number))/2;
-       res.send(`${result}`)
+       return;
    } 
+   if (isNaN(number)) {
+        res.send('Wrong Parameter')
+        return; //直接return掉 就不會往下走。
+   } 
+    const result = ((1 + Number(req.query.number)) * Number(req.query.number))/2;
+    res.send(`${result}`)
+   
 });
 
 
