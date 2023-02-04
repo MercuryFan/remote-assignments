@@ -2,10 +2,18 @@ const dotenv = require('dotenv').config();
 const mysql = require('mysql2');
 const express = require('express');
 const bodyParser = require('body-parser');
-const encoder = bodyParser.urlencoded();
+const encoder = bodyParser.urlencoded({ extended: true });
+const session = require('express-session');
+
 
 const app = express();
 app.use('/assets', express.static('assets'));
+app.use(session({
+	secret: 'secret',
+	resave: true,
+	saveUninitialized: true
+}));
+
 
 const connection = mysql.createConnection({
     user: process.env.MYSQL_USER,
@@ -14,43 +22,70 @@ const connection = mysql.createConnection({
     database: process.env.MYSQL_DATABASE
 })
 
-app.get('/', function (req, res) {
-    res.sendFile(__dirname + '/index.html');
+connection.connect(function(error){
+    if (error) throw error
+    else console.log("connected to the database successfully!")
 });
 
-app.post('/signup')
-function signUp(email, password) {
-    connection.query('INSERT INTO user (email, password) VALUES("?", "?")', [email, password], (error,
-        results) => {
-        if (error) return res.json({ error: error });
-    });
-}
-signUp('123@hhjj.com', '1122')
+app.get('/home', function (req, res) {
+    res.sendFile(__dirname + '/views/index.html');
+});
 
-//INSERT INTO user (email, password)VALUES('aaa1234@gmail.com', '0000');
+app.get('/member', function (req, res) {
+    res.sendFile(__dirname + '/views/member.html')
+})
 
-app.post('/login', encoder, function (req, res) {
+app.post('/home', encoder, function (req, res) {
     var email = req.body.email;
     var password = req.body.password;
-
-    connection.query('SELECT * FROM user WHERE email= ? and password= ?', [email, password], function (error, results, fields) {
-        if (results.length > 0) {
-            res.redirect('/welcome');
+    
+        if (email && password) {
+            // Execute SQL query that'll select the account from the database based on the specified username and password
+            connection.query('SELECT * FROM user WHERE email = ? AND password = ?', [email, password], function(error, results, fields) {
+                // If there is an issue with the query, output the error
+                if (error) throw error;
+                // If the account exists
+                if (results.length > 0) {
+                    // Authenticate the user
+                    request.session.loggedin = true;
+                    request.session.email = email;
+                    // Redirect to home page
+                    response.redirect('/member');
+                } else {
+                    response.send('Incorrect Username and/or Password!');
+                }			
+                response.end();
+            });
         } else {
-            res.redirect('/');
+            response.send('Please enter Username and Password!');
+            response.end();
         }
-        res.end();
-    })
 })
 
-//when login is success
-app.get('/welcome', function (req, res) {
-    res.sendFile(__dirname + '/welcome.html')
+
+
+app.post('/register',encoder, function(req, res) {
+    var email = req.body.email;
+    var password = req.body.password;
+    
+
+    connection.query(`INSERT INTO user (email, password) VALUES(?, ?)`, [email, password], function (error, results) {
+        if (error)return res.json({ error: error });
+        res.redirect('/home')
+    })
+    
 })
+
+
+
+app.get('/register', function (req, res) {
+    res.sendFile(__dirname + '/views/register.html');
+})
+
 
 
 
 //set app port
-// app.listen(3000, () => {
-//     console.log('The Website is running on local:3000')
-//  });
+app.listen(process.env.PORT, () => {
+    console.log('The Website is running')
+ });   

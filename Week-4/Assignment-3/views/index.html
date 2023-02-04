@@ -17,12 +17,17 @@
         </div>
         <div class="form">
             <h2>User Login</h2>
-            <form action="/login" method="POST">
-                <input type="email" name="email" class="input-field" placeholder="E-mail" />
-                <input type="password" name="password" class="input-field" placeholder="Password" />
-                <input type="submit" class="btn" value="LOGIN">
+            <form action="/home" method="POST">
+                <input type="email" name="email" class="input-field" placeholder="E-mail" required/>
+                <input type="password" name="password" class="input-field" placeholder="Password" required/>
+                <input type="submit" class="btn" value="Sign-In">
             </form>
+            <div>
+                <p>Don't have an account yet? <a href="/register">Register</a></p>
+            </div>
+            
         </div>
+       
     </section>   
 </body>
 </html>
