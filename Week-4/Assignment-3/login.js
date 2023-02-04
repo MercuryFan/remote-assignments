@@ -1,18 +1,18 @@
 const dotenv = require('dotenv').config();
 const mysql = require('mysql2');
+const hbs = require('hbs');
+const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
 const encoder = bodyParser.urlencoded({ extended: true });
-const session = require('express-session');
 
 
 const app = express();
 app.use('/assets', express.static('assets'));
-app.use(session({
-	secret: 'secret',
-	resave: true,
-	saveUninitialized: true
-}));
+
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'hbs' );
+
 
 
 const connection = mysql.createConnection({
@@ -28,59 +28,62 @@ connection.connect(function(error){
 });
 
 app.get('/home', function (req, res) {
-    res.sendFile(__dirname + '/views/index.html');
+    res.render('index');
 });
 
-app.get('/member', function (req, res) {
-    res.sendFile(__dirname + '/views/member.html')
-})
 
-app.post('/home', encoder, function (req, res) {
+
+app.get('/member', function (req, res) {
+    res.render('member');
+});
+
+app.post('/login', encoder, function (req, res) {
     var email = req.body.email;
     var password = req.body.password;
-    
-        if (email && password) {
-            // Execute SQL query that'll select the account from the database based on the specified username and password
-            connection.query('SELECT * FROM user WHERE email = ? AND password = ?', [email, password], function(error, results, fields) {
-                // If there is an issue with the query, output the error
-                if (error) throw error;
-                // If the account exists
-                if (results.length > 0) {
-                    // Authenticate the user
-                    request.session.loggedin = true;
-                    request.session.email = email;
-                    // Redirect to home page
-                    response.redirect('/member');
-                } else {
-                    response.send('Incorrect Username and/or Password!');
-                }			
-                response.end();
-            });
-        } else {
-            response.send('Please enter Username and Password!');
-            response.end();
-        }
-})
 
+    connection.query('SELECT * FROM user WHERE email = ? AND password = ?', [email, password], function(error, results, fields) {
+        if (error) {
+            console.log(error);
+            res.send(error);
+            return;
+        }
+        if(results.length <= 0) {
+            return res.render('index', {
+                message: 'Incorrect Email and/or Password!'
+            });
+        }
+        res.render('member');
+    });
+});
 
 
 app.post('/register',encoder, function(req, res) {
     var email = req.body.email;
     var password = req.body.password;
-    
 
-    connection.query(`INSERT INTO user (email, password) VALUES(?, ?)`, [email, password], function (error, results) {
-        if (error)return res.json({ error: error });
-        res.redirect('/home')
-    })
-    
+    connection.query('SELECT email FROM user WHERE email = ?', [email], (error, results) => {
+        if(error) {
+            console.log(error);
+            return;
+        }
+
+        if(results.length > 0) {
+            return res.render('register', {
+                message: 'That is already in usered'
+            })
+        } else {
+            connection.query(`INSERT INTO user (email, password) VALUES(?, ?)`, [email, password], function (error, results) {
+                return res.render('index')
+            })
+        }
+    }); 
 })
 
 
 
 app.get('/register', function (req, res) {
-    res.sendFile(__dirname + '/views/register.html');
-})
+    res.render('register');
+});
 
 
 
