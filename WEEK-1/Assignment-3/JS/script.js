@@ -14,13 +14,13 @@ function countAandB(input) {
 
 function toNumber(input) {
   // your code here
-  let dict = {'a': 1, 'b': 2, 'c': 3, 'd': 4, 'e': 5};
+  let dict = { 'a': 1, 'b': 2, 'c': 3, 'd': 4, 'e': 5 };
   let i = 0;
   let arry = [];
-  while(i < input.length) {
-  	let elem = input[i];
-    arry[i] = dict[elem] ;
-  	i = i + 1;
+  while (i < input.length) {
+    let elem = input[i];
+    arry[i] = dict[elem];
+    i = i + 1;
   }
   return arry;
 }
